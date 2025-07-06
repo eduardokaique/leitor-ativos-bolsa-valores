@@ -1,0 +1,87 @@
+@use "sass:color";
+
+$primary: #228b22;
+$primary-light: #7cfc00;
+$bg: #f3f4f6;
+$text: #222;
+
+.container {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: $bg;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: 'Inter', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: $primary;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.button {
+  background-color: $primary;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  &:hover {
+    background-color: color.scale($primary, $lightness: -10%);
+  }
+
+  &:disabled {
+    background-color: #bbb;
+    cursor: not-allowed;
+  }
+}
+
+.resultado h3 {
+  font-weight: 600;
+  color: $text;
+}
+
+.resultado h3 span {
+  color: $primary;
+}
+
+.recomendacao {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 1rem;
+  color: #444;
+}
+
+.controles {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+
+  label {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+}

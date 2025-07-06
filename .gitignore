@@ -1,0 +1,57 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# dotenv environment variables
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+tmp/
+temp/
+.cache/
+
+# Dependency directories
+jspm_packages/
+
+# IDEs e editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage directories
+coverage/
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# MacOS file metadata
+*.DS_Store
+
+# Environment variables
+.env
+
+.venv/

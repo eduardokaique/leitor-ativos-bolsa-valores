@@ -1,0 +1,51 @@
+<div class="container">
+    <img src="https://cdn-icons-png.flaticon.com/512/9515/9515981.png" width="64" alt="logo"
+    style="display:block;margin:0 auto 1rem;" />
+  <h2>📈 Leitor de Ativos Financeiros</h2>
+
+  <div class="form-group">
+    <div class="form-group">
+      <input type="text" [(ngModel)]="codigoAtivo" placeholder="Ex: PETR4, AAPL3, BBDC3" class="input" />
+
+      <select [(ngModel)]="intervaloSelecionado" class="input">
+        <option *ngFor="let intervalo of intervalosDisponiveis" [value]="intervalo">{{ intervalo }}</option>
+      </select>
+
+      <select [(ngModel)]="outputSelecionado" class="input">
+        <option *ngFor="let output of outputsDisponiveis" [value]="output">{{ output }}</option>
+      </select>
+
+      <button (click)="buscarAtivo()" [disabled]="carregando" class="button">
+        {{ carregando ? 'Buscando...' : 'Buscar' }}
+      </button>
+      <!-- <button (click)="treinarModelo()" [disabled]="carregando" class="button">
+        {{ carregando ? 'Treinando...' : 'Treinar Modelo com esse Ativo' }}
+      </button> -->
+
+    </div>
+  </div>
+
+  <div *ngIf="precoAtual !== null" class="resultado">
+
+    <h3>💰 Preço atual: <span>R$ {{ precoAtual }}</span></h3>
+
+    <div class="controles">
+      <label><input type="checkbox" [(ngModel)]="mostrarHistorico" (change)="buscarAtivo()" /> Histórico</label>
+      <label><input type="checkbox" [(ngModel)]="mostrarTendencia" (change)="buscarAtivo()" /> Tendência</label>
+      <label><input type="checkbox" [(ngModel)]="mostrarMedia" (change)="buscarAtivo()" /> Média Móvel</label>
+    </div>
+
+    <canvas baseChart [data]="chartData" [type]="'line'"
+      [options]="{ responsive: true, plugins: { legend: { position: 'bottom' } } }"></canvas>
+
+    <!-- <button class="button" (click)="preverPreco()">🔮 Prever preço futuro</button>
+
+    <div *ngIf="precoPrevisto !== null" class="previsao">
+      📊 Preço previsto: R$ {{ precoPrevisto.toFixed(2) }}
+    </div> -->
+
+    <div *ngIf="recomendacao" class="recomendacao">
+      <strong>📊 Recomendação:</strong> {{ recomendacao }}
+    </div>
+  </div>
+</div>
