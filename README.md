@@ -20,7 +20,7 @@ Aplicação web para consulta de preços históricos de ativos financeiros, como
 - Gráfico com os valores históricos (últimos 60 períodos).
 - Interface leve e responsiva para pesquisa de ativos por código (ex: `PETR4`, `VALE3`, etc).
 
-### ❌ Funcionalidades Removidas
+### ❌ Funcionalidades Em Desenvolvimento
 - Previsão de preços com IA (modelos de regressão).
 - Treinamento de modelos preditivos.
 
@@ -36,8 +36,8 @@ Aplicação web para consulta de preços históricos de ativos financeiros, como
 
 ```bash
 # Clone o projeto
-git clone https://github.com/seu-usuario/leitor-ativos.git
-cd leitor-ativos
+git clone https://github.com/eduardokaique/leitor-ativos-bolsa-valores.git
+cd leitor-ativos-bolsa-valores
 
 # Crie o arquivo .env na raiz da pasta backend com as variáveis:
 # .env
@@ -50,4 +50,4 @@ docker-compose up --build
 ### Acesso
 
 - Frontend: http://localhost
-- Backend: http://localhost:3000/api/ativo
+- Backend: [http://localhost:3000/api/ativo](https://api.twelvedata.com)
