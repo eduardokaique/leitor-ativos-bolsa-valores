@@ -1,0 +1,11 @@
+# netlify.toml
+
+[build]
+  # Pasta onde está o build final (ajuste para o seu caso)
+  publish = "dist/leitor-ativos/browser"
+  command = "ng build --configuration production"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
