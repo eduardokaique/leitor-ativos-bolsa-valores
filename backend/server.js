@@ -127,12 +127,32 @@ app.post('/api/treinar', async (req, res) => {
   }
 });
 
+// =====================================
+// 😱 Rota: Fear & Greed Index (Índice do Medo)
+// =====================================
+app.get('/api/indice-medo', async (req, res) => {
+  try {
+    // Exemplo usando API pública do Fear & Greed Index (alternative.me)
+    const { data } = await axios.get('https://api.alternative.me/fng/');
+    if (!data || !data.data || !data.data[0]) {
+      return res.status(500).json({ error: 'Não foi possível obter o índice do medo.' });
+    }
+    const indice = data.data[0];
+    return res.json({
+      valor: indice.value,
+      classificacao: indice.value_classification,
+      data: indice.timestamp
+    });
+  } catch (error) {
+    console.error('Erro ao obter índice do medo:', error.message);
+    return res.status(500).json({ error: 'Erro ao obter índice do medo.' });
+  }
+});
+
 // ==========================
 // 🚀 Inicialização do servidor
 // ==========================
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
-
-
 });
