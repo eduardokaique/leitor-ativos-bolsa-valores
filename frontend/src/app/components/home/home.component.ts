@@ -5,11 +5,13 @@ import { AtivoService } from '../../services/ativo.service';
 import { NgChartsModule } from 'ng2-charts';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import { Chart } from 'chart.js';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgChartsModule],
+  imports: [CommonModule, FormsModule, NgChartsModule, HttpClientModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -41,9 +43,55 @@ export class HomeComponent {
   intervaloSelecionado: string = '1day';
   outputSelecionado: string = '30';
 
+  // Gauge do medo/ganância
+  medoValor: number | null = null;
+  medoData: string | null = null;
+  gaugeData: any = null;
+  gaugeOptions: any = {
+    responsive: true,
+    cutout: '80%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (ctx: any) => `Índice VIX: ${ctx.parsed}`
+        }
+      }
+    },
+    rotation: -Math.PI,
+    circumference: Math.PI,
+  };
 
+  constructor(private ativoService: AtivoService, private http: HttpClient) { }
 
-  constructor(private ativoService: AtivoService) { }
+  ngOnInit() {
+    this.buscarMedo();
+  }
+
+  buscarMedo() {
+    this.http.get<any>('http://localhost:3000/api/indicador-medo').subscribe({
+      next: (res) => {
+        this.medoValor = res.valorAtual;
+        this.medoData = res.dataAtual;
+        // VIX: <15 = ganância, 15-25 = neutro, >25 = medo
+        let cor = '#4caf50'; // verde (ganância)
+        if (this.medoValor !== null && this.medoValor >= 25) cor = '#f44336'; // vermelho (medo)
+        else if (this.medoValor !== null && this.medoValor >= 15) cor = '#ff9800'; // laranja (neutro)
+        this.gaugeData = {
+          labels: ['Medo/Ganância'],
+          datasets: [{
+            data: [this.medoValor ?? 0, 40 - (this.medoValor ?? 0)],
+            backgroundColor: [cor, '#e0e0e0'],
+            borderWidth: 0
+          }]
+        };
+      },
+      error: () => {
+        this.medoValor = null;
+        this.gaugeData = null;
+      }
+    });
+  }
 
   buscarAtivo() {
     this.carregando = true;

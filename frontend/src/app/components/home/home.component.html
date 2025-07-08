@@ -3,6 +3,20 @@
     style="display:block;margin:0 auto 1rem;" />
   <h2>📈 Leitor de Ativos Financeiros</h2>
 
+  <!-- Gauge do Medo/Ganância -->
+  <div style="max-width:400px;margin:2rem auto 1rem;">
+    <h3 style="text-align:center;">😨 Medo & Ganância dos Investidores</h3>
+    <canvas *ngIf="gaugeData" baseChart [data]="gaugeData" [type]="'doughnut'" [options]="gaugeOptions"></canvas>
+    <div *ngIf="medoValor !== null" style="text-align:center;margin-top:0.5rem;">
+      <strong>Índice VIX:</strong> {{ medoValor | number:'1.1-2' }}<br>
+      <span *ngIf="medoValor < 15" style="color:#4caf50;">Ganância (baixo medo)</span>
+      <span *ngIf="medoValor >= 15 && medoValor < 25" style="color:#ff9800;">Neutro</span>
+      <span *ngIf="medoValor >= 25" style="color:#f44336;">Medo (alta volatilidade)</span>
+      <div style="font-size:0.9em;color:#888;">Atualizado em: {{ medoData | date:'short' }}</div>
+    </div>
+    <div *ngIf="gaugeData === null" style="text-align:center;color:#f44336;">Não foi possível obter o índice do medo.</div>
+  </div>
+
   <div class="form-group">
     <div class="form-group">
       <input type="text" [(ngModel)]="codigoAtivo" placeholder="Ex: PETR4, AAPL3, BBDC3" class="input" />
@@ -16,7 +30,7 @@
       </select>
 
       <button (click)="buscarAtivo()" [disabled]="carregando" class="button">
-        {{ carregando ? 'Buscando...' : 'Buscar' }}
+        {{ carregando ? 'Procurando...' : 'Procurar' }}
       </button>
       <!-- <button (click)="treinarModelo()" [disabled]="carregando" class="button">
         {{ carregando ? 'Treinando...' : 'Treinar Modelo com esse Ativo' }}

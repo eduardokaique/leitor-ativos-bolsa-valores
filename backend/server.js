@@ -127,6 +127,30 @@ app.post('/api/treinar', async (req, res) => {
   }
 });
 
+// ==============================
+// 😨 Rota: Indicador do Medo (VIX)
+// ==============================
+app.get('/api/indicador-medo', async (req, res) => {
+  try {
+    // Endpoint público do Yahoo Finance para o VIX
+    const url = 'https://query1.finance.yahoo.com/v8/finance/chart/^VIX';
+    const { data } = await axios.get(url);
+    const result = data.chart?.result?.[0];
+    const close = result?.indicators?.quote?.[0]?.close;
+    const timestamps = result?.timestamp;
+    if (!close || !timestamps) {
+      return res.status(500).json({ error: 'Dados do VIX indisponíveis.' });
+    }
+    // Pega o último valor disponível
+    const valorAtual = close[close.length - 1];
+    const dataAtual = new Date(timestamps[timestamps.length - 1] * 1000);
+    return res.json({ valorAtual, dataAtual });
+  } catch (error) {
+    console.error('Erro ao buscar indicador do medo (VIX):', error.message);
+    return res.status(500).json({ error: 'Erro ao buscar indicador do medo.' });
+  }
+});
+
 // ==========================
 // 🚀 Inicialização do servidor
 // ==========================
